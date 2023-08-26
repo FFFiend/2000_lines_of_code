@@ -1,3 +1,5 @@
+import numpy as np
+
 class Entity:
     """ Entity class for the world. """
     def __init__(self):
@@ -8,11 +10,14 @@ class Entity:
         self.damage = 0
         self.inventory = {}
 
+        self.repr = None
+
 class Robot(Entity):
     """Class for the robot entity. """
     def __init__(self):
         super().__init__()
         self.damage = 20
+        self.repr = ".||."
 
 class MiniAdversary(Entity):
     """Class for obstacles in the world."""
@@ -20,6 +25,7 @@ class MiniAdversary(Entity):
         super().__init__()
         self.damage = 5
         self.health = 3
+        self.repr = "*"
 
 class Item:
     """Item class."""
@@ -44,6 +50,12 @@ class ShieldPotion(TimedConsumable):
         super().__init__()
         self.shield_val = shield_val
 
+class Game:
+    def __init__(self):
+        self.world = [["."] * 10 for i in range(10)]
+        self.entities = None
+        self.player_score = 0
+        self.player = Robot()
 
-
-
+    def _update(self):
+        raise NotImplementedError

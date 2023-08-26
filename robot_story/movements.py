@@ -21,7 +21,7 @@ def move_entity(entity: Entity, direction: str):
 
 def spawn_entity(entity: Entity, spawn_x, spawn_y):
     assert (
-        spawn_x is None and spawn_y is None
+        entity.x is None and entity.y is None
     ), "You can't spawn an entity that alreaady exists on the board."
 
     entity.x, entity.y = spawn_x, spawn_y
