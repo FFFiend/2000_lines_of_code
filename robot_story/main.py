@@ -1,6 +1,7 @@
 from classes import *
 from movements import *
 import numpy as np
+import pygame
 
 
 COORD_PREV_VAL_MAP = {}
@@ -56,7 +57,6 @@ def _init_world(game_instance: Game, spawn_point: tuple[int], player: Robot):
 
     game_instance.world[spawn_point[0]][spawn_point[1]] = player.repr
     spawn_entity(player, spawn_point[0], spawn_point[1])
-    print("This is the world currently:")
     display_world(game_instance)
 
 
@@ -74,8 +74,8 @@ def _game_state_manager(game_instance: Game, curr_action: str):
 
         move_entity(game_instance.player, curr_action)
         # post update stamina boost
-        if isinstance(COORD_PREV_VAL_MAP[(game_instance.player.x,game_instance.player.y)], StaminaPotion):
-            curr_potion = COORD_PREV_VAL_MAP[(game_instance.player.x,game_instance.player.y)]
+        if isinstance(game_instance.world[game_instance.player.x][game_instance.player.y], StaminaPotion):
+            curr_potion = game_instance.world[game_instance.player.x][game_instance.player.y]
             game_instance.player.stamina += curr_potion.stamina_grant
         
         else:
@@ -85,7 +85,6 @@ def _game_state_manager(game_instance: Game, curr_action: str):
             game_instance.player.y
         ] = game_instance.player.repr
 
-        print(game_instance.player.stamina)
         display_world(game_instance)
         return 1
 
@@ -98,9 +97,6 @@ def display_world(game_instance: Game):
     for i in range(len(game_instance.world)):
         print(game_instance.world[i])
 
-
-def print(val):
-    __builtins__.print(val)
 
 if __name__ == "__main__":
     main()
