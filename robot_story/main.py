@@ -44,15 +44,14 @@ def _init_world(game_instance: Game, spawn_point: tuple[int], player: Robot):
     for i in range(len(game_instance.world)):
         for j in range(len(game_instance.world[i])):
             if np.random.randint(0, 43) % 2 == 0:
-                game_instance.world[i][j] = MiniAdversary().repr
+                game_instance.world[i][j] = StaminaPotion(np.random.randint(1,9))
             else:
                 # calculate once again so that we dont only have
                 # odd values in the path.
-                game_instance.world[i][j] = np.random.randint(0, 43)
+                game_instance.world[i][j] = np.random.randint(0, 21)
 
             COORD_PREV_VAL_MAP[(i, j)] = game_instance.world[i][j]
 
-    print(COORD_PREV_VAL_MAP)
     game_instance.world[spawn_point[0]][spawn_point[1]] = player.repr
     spawn_entity(player, spawn_point[0], spawn_point[1])
     print("This is the world currently:")
@@ -61,14 +60,30 @@ def _init_world(game_instance: Game, spawn_point: tuple[int], player: Robot):
 
 def _game_state_manager(game_instance: Game, curr_action: str):
     if curr_action in {"W", "A", "S", "D"}:
-        game_instance.world[game_instance.player.x][
+
+        if isinstance(COORD_PREV_VAL_MAP[(game_instance.player.x,game_instance.player.y)],StaminaPotion):
+            game_instance.world[game_instance.player.x][game_instance.player.y] = 0
+
+        else:
+            game_instance.world[game_instance.player.x][
             game_instance.player.y
-        ] = COORD_PREV_VAL_MAP[(game_instance.player.x,game_instance.player.y)]
+            ] = COORD_PREV_VAL_MAP[(game_instance.player.x,game_instance.player.y)]
+
+
         move_entity(game_instance.player, curr_action)
+        # post update stamina boost
+        if isinstance(COORD_PREV_VAL_MAP[(game_instance.player.x,game_instance.player.y)], StaminaPotion):
+            curr_potion = COORD_PREV_VAL_MAP[(game_instance.player.x,game_instance.player.y)]
+            game_instance.player.stamina += curr_potion.stamina_grant
+        
+        else:
+            game_instance.player.stamina -= 2
+
         game_instance.world[game_instance.player.x][
             game_instance.player.y
         ] = game_instance.player.repr
 
+        print(game_instance.player.stamina)
         display_world(game_instance)
         return 1
 
