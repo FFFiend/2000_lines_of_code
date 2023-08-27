@@ -44,6 +44,11 @@ class StaminaPotion(TimedConsumable):
     def __init__(self, boost_val: int):
         super().__init__()
         self.stamina_grant = boost_val
+        self.repr = "SP"
+
+    def __repr__(self):
+        return self.repr
+
 
 class ShieldPotion(TimedConsumable):
     def __init__(self, shield_val: int):
