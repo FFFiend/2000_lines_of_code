@@ -52,6 +52,8 @@ def _init_world(game_instance: Game, spawn_point: tuple[int], player: Robot):
 
             COORD_PREV_VAL_MAP[(i, j)] = game_instance.world[i][j]
 
+        game_instance.world[i][i] = ShieldPotion(np.random.randint(5,8))
+
     game_instance.world[spawn_point[0]][spawn_point[1]] = player.repr
     spawn_entity(player, spawn_point[0], spawn_point[1])
     print("This is the world currently:")
@@ -95,6 +97,10 @@ def _game_state_manager(game_instance: Game, curr_action: str):
 def display_world(game_instance: Game):
     for i in range(len(game_instance.world)):
         print(game_instance.world[i])
+
+
+def print(val):
+    __builtins__.print(val)
 
 if __name__ == "__main__":
     main()

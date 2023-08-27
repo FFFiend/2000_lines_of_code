@@ -54,6 +54,10 @@ class ShieldPotion(TimedConsumable):
     def __init__(self, shield_val: int):
         super().__init__()
         self.shield_val = shield_val
+        self.repr = "<>"
+
+    def __repr__(self):
+        return self.repr
 
 class Game:
     def __init__(self):
