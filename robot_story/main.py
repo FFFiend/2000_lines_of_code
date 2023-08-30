@@ -1,8 +1,7 @@
 from classes import *
 from movements import *
 import numpy as np
-import pygame
-
+from map_generation import _generate_map
 
 COORD_PREV_VAL_MAP = {}
 
@@ -42,20 +41,10 @@ def main():
 
 def _init_world(game_instance: Game, spawn_point: tuple[int], player: Robot):
     # set the world up
-    for i in range(len(game_instance.world)):
-        for j in range(len(game_instance.world[i])):
-            if np.random.randint(0, 43) % 2 == 0:
-                game_instance.world[i][j] = StaminaPotion(np.random.randint(1,9))
-            else:
-                # calculate once again so that we dont only have
-                # odd values in the path.
-                game_instance.world[i][j] = np.random.randint(0, 21)
 
-            COORD_PREV_VAL_MAP[(i, j)] = game_instance.world[i][j]
+    game_instance.world = _generate_map(game_instance.world, COORD_PREV_VAL_MAP)
 
-        game_instance.world[i][i] = ShieldPotion(np.random.randint(5,8))
-
-    game_instance.world[spawn_point[0]][spawn_point[1]] = player.repr
+    game_instance.world[spawn_point[0]][spawn_point[1]] = player
     spawn_entity(player, spawn_point[0], spawn_point[1])
     display_world(game_instance)
 
@@ -83,7 +72,7 @@ def _game_state_manager(game_instance: Game, curr_action: str):
 
         game_instance.world[game_instance.player.x][
             game_instance.player.y
-        ] = game_instance.player.repr
+        ] = game_instance.player
 
         display_world(game_instance)
         return 1

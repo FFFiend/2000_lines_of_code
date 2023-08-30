@@ -1,4 +1,5 @@
 import numpy as np
+from pygame.sprite import Sprite
 
 class Entity:
     """ Entity class for the world. """
@@ -12,12 +13,22 @@ class Entity:
 
         self.repr = None
 
+    def __repr__(self):
+        return self.repr
+
 class Robot(Entity):
     """Class for the robot entity. """
     def __init__(self):
         super().__init__()
         self.damage = 20
         self.repr = ".||."
+    
+
+class Block(Entity):
+    """Blocker class"""
+    def __init__(self):
+        super().__init__()
+        self.repr = "[]"
 
 class MiniAdversary(Entity):
     """Class for obstacles in the world."""
@@ -34,6 +45,10 @@ class Consumable(Item):
     """Consumable class."""
     def __init__(self):
         self.status = "Active"
+        self.repr = None
+    
+    def __repr__(self):
+        return self.repr
 
 class TimedConsumable(Consumable):
     """ TimedConsumable class. """
@@ -46,9 +61,6 @@ class StaminaPotion(TimedConsumable):
         self.stamina_grant = boost_val
         self.repr = "SP"
 
-    def __repr__(self):
-        return self.repr
-
 
 class ShieldPotion(TimedConsumable):
     def __init__(self, shield_val: int):
@@ -56,13 +68,10 @@ class ShieldPotion(TimedConsumable):
         self.shield_val = shield_val
         self.repr = "<>"
 
-    def __repr__(self):
-        return self.repr
 
 class Game:
     def __init__(self):
-        self.world = [["."] * 10 for i in range(10)]
-        self.entities = None
+        self.world = [["."] * 25 for i in range(25)]
         self.player_score = 0
         self.player = Robot()
 
