@@ -9,3 +9,6 @@ Current TODOs:
 implement inventory and entity-entity interaction
 
 maybe add Reinforcement Learning (Q Learning) twist on this? Project is still super early stage
+
+
+# make the python script interactible by sending http requests or something
