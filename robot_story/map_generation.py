@@ -6,7 +6,6 @@ DEFAULT_STAMINA_VAL = 20
 DEFAULT_SHIELD_VAL = 10
 
 def _generate_map(curr_world: list[list[str]], world_dict) -> list[list[Entity, int]]:
-
     for i in range(len(curr_world)):
         for j in range(len(curr_world[0])):
             rand_num = np.random.randint(1,53)

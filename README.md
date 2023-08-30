@@ -6,5 +6,4 @@ current count: around 180
 
 Current TODOs:
 
-1) Add Pygame and atabase for maps.
-2) Add map generator.
+implement inventory and entity-entity interaction

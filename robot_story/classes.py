@@ -1,5 +1,6 @@
+from collections import deque
 import numpy as np
-from pygame.sprite import Sprite
+
 
 class Entity:
     """ Entity class for the world. """
@@ -74,6 +75,7 @@ class Game:
         self.world = [["."] * 25 for i in range(25)]
         self.player_score = 0
         self.player = Robot()
-
+        self._action_sequence = deque
+        
     def _update(self):
         raise NotImplementedError
