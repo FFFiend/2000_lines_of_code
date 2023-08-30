@@ -8,4 +8,4 @@ Current TODOs:
 
 implement inventory and entity-entity interaction
 
-maybe add RL twist on this? Project is still super early stage
+maybe add Reinforcement Learning (Q Learning) twist on this? Project is still super early stage
