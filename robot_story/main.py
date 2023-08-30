@@ -2,10 +2,13 @@ from classes import *
 from movements import *
 import numpy as np
 from map_generation import _generate_map
+from flask import Flask
 
+app = Flask(__name__)
 COORD_PREV_VAL_MAP = {}
 
 
+@app.route('/')
 def main():
     # Need to maintain state of the world,
     # as well as keep updating it.
@@ -76,7 +79,8 @@ def _game_state_manager(game_instance: Game, curr_action: str):
 
         display_world(game_instance)
         return 1
-
+        # the logic i have here can be generalized to any interaction we have on the board, 
+        # idk how to best refactor this. 
     else:
         print("Please enter a valid action.")
         return 0
